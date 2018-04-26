@@ -53,9 +53,8 @@ findbugs {
 }
 
 intellij {
-    pluginName 'azure-toolkit-for-intellij'
+    pluginName 'azure-toolkit-for-rider'
     version intellij_version
-    plugins = ['maven', dep_plugins]
 	downloadSources Boolean.valueOf(sources)
 }
 
