@@ -21,28 +21,20 @@
  */
 package com.microsoft.intellij.ui.libraries;
 
-import com.intellij.openapi.application.AccessToken;
-import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderEntry;
 import com.intellij.openapi.roots.impl.ModuleLibraryOrderEntryImpl;
-import com.intellij.openapi.roots.libraries.Library;
-import com.intellij.openapi.roots.libraries.ui.OrderRoot;
-import com.intellij.openapi.roots.ui.configuration.projectRoot.LibrariesContainer;
-import com.intellij.openapi.roots.ui.configuration.projectRoot.LibrariesContainerFactory;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.ui.ValidationInfo;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.microsoft.applicationinsights.preference.ApplicationInsightsResourceRegistry;
 import com.microsoft.intellij.AzurePlugin;
-import com.microsoft.intellij.AzureSettings;
 import com.microsoft.intellij.ui.AppInsightsMngmtPanel;
 import com.microsoft.intellij.ui.AzureAbstractPanel;
 import com.microsoft.intellij.ui.components.DefaultDialogWrapper;
-import com.microsoft.intellij.util.PluginHelper;
 import com.microsoft.intellij.util.PluginUtil;
 import org.jdesktop.swingx.JXHyperlink;
 
@@ -51,7 +43,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -291,27 +282,27 @@ public class ApplicationInsightsPanel implements AzureAbstractPanel {
             }
         }
 
-        final LibrariesContainer.LibraryLevel level = LibrariesContainer.LibraryLevel.MODULE;
-        AccessToken token = WriteAction.start();
-        try {
-            Library newLibrary = LibrariesContainerFactory.createContainer(modifiableModel).createLibrary(AzureLibrary.APP_INSIGHTS.getName(), level, new ArrayList<OrderRoot>());
-            for (OrderEntry orderEntry : modifiableModel.getOrderEntries()) {
-                if (orderEntry instanceof ModuleLibraryOrderEntryImpl
-                        && AzureLibrary.APP_INSIGHTS.getName().equals(((ModuleLibraryOrderEntryImpl) orderEntry).getLibraryName())) {
-                    ((ModuleLibraryOrderEntryImpl) orderEntry).setExported(true);
-                    break;
-                }
-            }
-            Library.ModifiableModel newLibraryModel = newLibrary.getModifiableModel();
-            AddLibraryUtility.addLibraryFiles(new File(PluginHelper.getAzureLibLocation()), newLibraryModel, AzureLibrary.APP_INSIGHTS.getFiles());
-
-            newLibraryModel.commit();
-            modifiableModel.commit();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            token.finish();
-        }
+//        final LibrariesContainer.LibraryLevel level = LibrariesContainer.LibraryLevel.MODULE;
+//        AccessToken token = WriteAction.start();
+//        try {
+//            Library newLibrary = LibrariesContainerFactory.createContainer(modifiableModel).createLibrary(AzureLibrary.APP_INSIGHTS.getName(), level, new ArrayList<OrderRoot>());
+//            for (OrderEntry orderEntry : modifiableModel.getOrderEntries()) {
+//                if (orderEntry instanceof ModuleLibraryOrderEntryImpl
+//                        && AzureLibrary.APP_INSIGHTS.getName().equals(((ModuleLibraryOrderEntryImpl) orderEntry).getLibraryName())) {
+//                    ((ModuleLibraryOrderEntryImpl) orderEntry).setExported(true);
+//                    break;
+//                }
+//            }
+//            Library.ModifiableModel newLibraryModel = newLibrary.getModifiableModel();
+//            AddLibraryUtility.addLibraryFiles(new File(PluginHelper.getAzureLibLocation()), newLibraryModel, AzureLibrary.APP_INSIGHTS.getFiles());
+//
+//            newLibraryModel.commit();
+//            modifiableModel.commit();
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        } finally {
+//            token.finish();
+//        }
     }
 
     public String createFileIfNotExists(String fileName, String relDirLocation, String resFileLoc) {

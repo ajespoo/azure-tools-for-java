@@ -21,17 +21,10 @@
  */
 package com.microsoft.intellij.helpers;
 
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.common.util.concurrent.SettableFuture;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.ModalityState;
-import com.intellij.openapi.compiler.CompileContext;
-import com.intellij.openapi.compiler.CompileScope;
-import com.intellij.openapi.compiler.CompileStatusNotification;
-import com.intellij.openapi.compiler.CompilerManager;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
@@ -39,10 +32,6 @@ import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.packaging.artifacts.Artifact;
-import com.intellij.packaging.impl.artifacts.ArtifactUtil;
-import com.intellij.packaging.impl.compiler.ArtifactCompileScope;
-import com.intellij.packaging.impl.compiler.ArtifactsWorkspaceSettings;
 import com.microsoft.azuretools.azurecommons.helpers.AzureCmdException;
 import com.microsoft.azuretools.azurecommons.helpers.NotNull;
 import com.microsoft.azuretools.azurecommons.helpers.Nullable;
@@ -59,11 +48,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -259,58 +244,14 @@ public class IDEHelperImpl implements IDEHelper {
 //        ApplicationManager.getApplication().saveSettings();
     }
 
-    @NotNull
     @Override
-    public List<ArtifactDescriptor> getArtifacts(@NotNull ProjectDescriptor projectDescriptor)
-            throws AzureCmdException {
-        Project project = findOpenProject(projectDescriptor);
-
-        List<ArtifactDescriptor> artifactDescriptors = new ArrayList<ArtifactDescriptor>();
-
-        for (Artifact artifact : ArtifactUtil.getArtifactWithOutputPaths(project)) {
-            artifactDescriptors.add(new ArtifactDescriptor(artifact.getName(), artifact.getArtifactType().getId()));
-        }
-
-        return artifactDescriptors;
+    public List<ArtifactDescriptor> getArtifacts(ProjectDescriptor projectDescriptor) throws AzureCmdException {
+        return null;
     }
 
-    @NotNull
     @Override
-    public ListenableFuture<String> buildArtifact(@NotNull ProjectDescriptor projectDescriptor,
-                                                  @NotNull ArtifactDescriptor artifactDescriptor) {
-        try {
-            Project project = findOpenProject(projectDescriptor);
-
-            final Artifact artifact = findProjectArtifact(project, artifactDescriptor);
-
-            final SettableFuture<String> future = SettableFuture.create();
-
-            Futures.addCallback(buildArtifact(project, artifact, false), new FutureCallback<Boolean>() {
-                @Override
-                public void onSuccess(@Nullable Boolean succeded) {
-                    if (succeded != null && succeded) {
-                        future.set(artifact.getOutputFilePath());
-                    } else {
-                        future.setException(new AzureCmdException("An error occurred while building the artifact"));
-                    }
-                }
-
-                @Override
-                public void onFailure(Throwable throwable) {
-                    if (throwable instanceof ExecutionException) {
-                        future.setException(new AzureCmdException("An error occurred while building the artifact",
-                                throwable.getCause()));
-                    } else {
-                        future.setException(new AzureCmdException("An error occurred while building the artifact",
-                                throwable));
-                    }
-                }
-            });
-
-            return future;
-        } catch (AzureCmdException e) {
-            return Futures.immediateFailedFuture(e);
-        }
+    public ListenableFuture<String> buildArtifact(ProjectDescriptor projectDescriptor, ArtifactDescriptor artifactDescriptor) {
+        return null;
     }
 
     @Override
@@ -334,24 +275,6 @@ public class IDEHelperImpl implements IDEHelper {
         return buffer.toByteArray();
     }
 
-    private static ListenableFuture<Boolean> buildArtifact(@NotNull Project project, final @NotNull Artifact artifact, boolean rebuild) {
-        final SettableFuture<Boolean> future = SettableFuture.create();
-
-        Set<Artifact> artifacts = new LinkedHashSet<Artifact>(1);
-        artifacts.add(artifact);
-        CompileScope scope = ArtifactCompileScope.createArtifactsScope(project, artifacts, rebuild);
-        ArtifactsWorkspaceSettings.getInstance(project).setArtifactsToBuild(artifacts);
-
-        CompilerManager.getInstance(project).make(scope, new CompileStatusNotification() {
-            @Override
-            public void finished(boolean aborted, int errors, int warnings, CompileContext compileContext) {
-                future.set(!aborted && errors == 0);
-            }
-        });
-
-        return future;
-    }
-
     @NotNull
     private static Project findOpenProject(@NotNull ProjectDescriptor projectDescriptor)
             throws AzureCmdException {
@@ -370,26 +293,6 @@ public class IDEHelperImpl implements IDEHelper {
         }
 
         return project;
-    }
-
-    @NotNull
-    private static Artifact findProjectArtifact(@NotNull Project project, @NotNull ArtifactDescriptor artifactDescriptor)
-            throws AzureCmdException {
-        Artifact artifact = null;
-
-        for (Artifact projectArtifact : ArtifactUtil.getArtifactWithOutputPaths(project)) {
-            if (artifactDescriptor.getName().equals(projectArtifact.getName())
-                    && artifactDescriptor.getArtifactType().equals(projectArtifact.getArtifactType().getId())) {
-                artifact = projectArtifact;
-                break;
-            }
-        }
-
-        if (artifact == null) {
-            throw new AzureCmdException("Unable to find an artifact with the specified description.");
-        }
-
-        return artifact;
     }
 
     @org.jetbrains.annotations.NotNull

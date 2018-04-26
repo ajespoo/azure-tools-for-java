@@ -23,21 +23,10 @@
 package com.microsoft.intellij.serviceexplorer;
 
 import com.google.common.collect.ImmutableList;
-import com.microsoft.azure.hdinsight.serverexplore.HDInsightRootModuleImpl;
-import com.microsoft.azure.hdinsight.serverexplore.action.AddNewClusterAction;
-import com.microsoft.azure.hdinsight.serverexplore.action.AddNewEmulatorAction;
 import com.microsoft.intellij.serviceexplorer.azure.container.PushToContainerRegistryAction;
-import com.microsoft.intellij.serviceexplorer.azure.docker.CreateNewDockerHostAction;
-import com.microsoft.intellij.serviceexplorer.azure.docker.DeleteDockerHostAction;
-import com.microsoft.intellij.serviceexplorer.azure.docker.DeployDockerContainerAction;
-import com.microsoft.intellij.serviceexplorer.azure.docker.PublishDockerContainerAction;
-import com.microsoft.intellij.serviceexplorer.azure.docker.ViewDockerHostAction;
+import com.microsoft.intellij.serviceexplorer.azure.docker.*;
 import com.microsoft.intellij.serviceexplorer.azure.rediscache.CreateRedisCacheAction;
-import com.microsoft.intellij.serviceexplorer.azure.storage.ConfirmDialogAction;
-import com.microsoft.intellij.serviceexplorer.azure.storage.CreateBlobContainer;
-import com.microsoft.intellij.serviceexplorer.azure.storage.CreateQueueAction;
-import com.microsoft.intellij.serviceexplorer.azure.storage.CreateTableAction;
-import com.microsoft.intellij.serviceexplorer.azure.storage.ModifyExternalStorageAccountAction;
+import com.microsoft.intellij.serviceexplorer.azure.storage.*;
 import com.microsoft.intellij.serviceexplorer.azure.storagearm.CreateStorageAccountAction;
 import com.microsoft.intellij.serviceexplorer.azure.vmarm.CreateVMAction;
 import com.microsoft.tooling.msservices.serviceexplorer.Node;
@@ -46,12 +35,7 @@ import com.microsoft.tooling.msservices.serviceexplorer.azure.container.Containe
 import com.microsoft.tooling.msservices.serviceexplorer.azure.docker.DockerHostModule;
 import com.microsoft.tooling.msservices.serviceexplorer.azure.docker.DockerHostNode;
 import com.microsoft.tooling.msservices.serviceexplorer.azure.rediscache.RedisCacheModule;
-import com.microsoft.tooling.msservices.serviceexplorer.azure.storage.BlobModule;
-import com.microsoft.tooling.msservices.serviceexplorer.azure.storage.ExternalStorageNode;
-import com.microsoft.tooling.msservices.serviceexplorer.azure.storage.QueueModule;
-import com.microsoft.tooling.msservices.serviceexplorer.azure.storage.StorageModule;
-import com.microsoft.tooling.msservices.serviceexplorer.azure.storage.StorageNode;
-import com.microsoft.tooling.msservices.serviceexplorer.azure.storage.TableModule;
+import com.microsoft.tooling.msservices.serviceexplorer.azure.storage.*;
 import com.microsoft.tooling.msservices.serviceexplorer.azure.vmarm.VMArmModule;
 
 import java.util.HashMap;
@@ -84,9 +68,9 @@ public class NodeActionsMap {
                 new ImmutableList.Builder<Class<? extends NodeActionListener>>()
                         .add(ConfirmDialogAction.class, ModifyExternalStorageAccountAction.class).build());
         //noinspection unchecked
-        node2Actions.put(HDInsightRootModuleImpl.class,
-                new ImmutableList.Builder<Class<? extends NodeActionListener>>()
-                        .add(AddNewClusterAction.class, AddNewEmulatorAction.class).build());
+//        node2Actions.put(HDInsightRootModuleImpl.class,
+//                new ImmutableList.Builder<Class<? extends NodeActionListener>>()
+//                        .add(AddNewClusterAction.class, AddNewEmulatorAction.class).build());
         //noinspection unchecked
         node2Actions.put(DockerHostNode.class,
                 new ImmutableList.Builder<Class<? extends NodeActionListener>>()

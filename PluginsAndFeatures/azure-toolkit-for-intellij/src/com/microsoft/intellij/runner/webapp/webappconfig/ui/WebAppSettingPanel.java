@@ -22,26 +22,14 @@
 
 package com.microsoft.intellij.runner.webapp.webappconfig.ui;
 
-import com.microsoft.intellij.runner.AzureSettingPanel;
-import icons.MavenIcons;
-
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.ActionToolbarPosition;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Comparing;
-import com.intellij.packaging.artifacts.Artifact;
-import com.intellij.ui.AnActionButton;
-import com.intellij.ui.HideableDecorator;
-import com.intellij.ui.HyperlinkLabel;
-import com.intellij.ui.ListCellRendererWrapper;
-import com.intellij.ui.ToolbarDecorator;
+import com.intellij.ui.*;
 import com.intellij.ui.table.JBTable;
-import com.microsoft.azure.management.appservice.AppServicePlan;
-import com.microsoft.azure.management.appservice.JavaVersion;
-import com.microsoft.azure.management.appservice.OperatingSystem;
-import com.microsoft.azure.management.appservice.PricingTier;
-import com.microsoft.azure.management.appservice.WebApp;
+import com.microsoft.azure.management.appservice.*;
 import com.microsoft.azure.management.resources.Location;
 import com.microsoft.azure.management.resources.ResourceGroup;
 import com.microsoft.azure.management.resources.Subscription;
@@ -49,30 +37,18 @@ import com.microsoft.azuretools.authmanage.AuthMethodManager;
 import com.microsoft.azuretools.core.mvp.model.ResourceEx;
 import com.microsoft.azuretools.core.mvp.model.webapp.JdkModel;
 import com.microsoft.azuretools.utils.WebAppUtils;
+import com.microsoft.intellij.runner.AzureSettingPanel;
 import com.microsoft.intellij.runner.webapp.webappconfig.WebAppConfiguration;
-import com.microsoft.intellij.util.MavenRunTaskUtil;
-
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.idea.maven.model.MavenConstants;
-import org.jetbrains.idea.maven.project.MavenProject;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 public class WebAppSettingPanel extends AzureSettingPanel<WebAppConfiguration> implements WebAppDeployMvpView {
 
@@ -123,7 +99,7 @@ public class WebAppSettingPanel extends AzureSettingPanel<WebAppConfiguration> i
     private JComboBox<AppServicePlan> cbExistAppServicePlan;
     private JComboBox<ResourceGroup> cbExistResGrp;
     private JComboBox<JdkModel> cbJdkVersion;
-    private JComboBox<Artifact> cbArtifact;
+    //private JComboBox<Artifact> cbArtifact;
     private JLabel lblLocation;
     private JLabel lblPricing;
     private JLabel lblArtifact;
@@ -138,7 +114,7 @@ public class WebAppSettingPanel extends AzureSettingPanel<WebAppConfiguration> i
     private JPanel pnlArtifact;
     private JPanel pnlMavenProject;
     private JLabel lblMavenProject;
-    private JComboBox<MavenProject> cbMavenProject;
+    //private JComboBox<MavenProject> cbMavenProject;
     private JBTable table;
     private AnActionButton btnRefresh;
     /**
@@ -264,30 +240,30 @@ public class WebAppSettingPanel extends AzureSettingPanel<WebAppConfiguration> i
             }
         });
 
-        // Artifact
-        cbArtifact.addActionListener(e -> {
-            artifactActionPeformed((Artifact) cbArtifact.getSelectedItem());
-        });
+//        // Artifact
+//        cbArtifact.addActionListener(e -> {
+//            artifactActionPeformed((Artifact) cbArtifact.getSelectedItem());
+//        });
+//
+//        cbArtifact.setRenderer(new ListCellRendererWrapper<Artifact>() {
+//            @Override
+//            public void customize(JList list, Artifact artifact, int index, boolean isSelected, boolean cellHasFocus) {
+//                if (artifact != null) {
+//                    setIcon(artifact.getArtifactType().getIcon());
+//                    setText(artifact.getName());
+//                }
+//            }
+//        });
 
-        cbArtifact.setRenderer(new ListCellRendererWrapper<Artifact>() {
-            @Override
-            public void customize(JList list, Artifact artifact, int index, boolean isSelected, boolean cellHasFocus) {
-                if (artifact != null) {
-                    setIcon(artifact.getArtifactType().getIcon());
-                    setText(artifact.getName());
-                }
-            }
-        });
-
-        cbMavenProject.setRenderer(new ListCellRendererWrapper<MavenProject>() {
-            @Override
-            public void customize(JList jList, MavenProject mavenProject, int i, boolean b, boolean b1) {
-                if (mavenProject != null) {
-                    setIcon(MavenIcons.MavenProject);
-                    setText(mavenProject.toString());
-                }
-            }
-        });
+//        cbMavenProject.setRenderer(new ListCellRendererWrapper<MavenProject>() {
+//            @Override
+//            public void customize(JList jList, MavenProject mavenProject, int i, boolean b, boolean b1) {
+//                if (mavenProject != null) {
+//                    setIcon(MavenIcons.MavenProject);
+//                    setText(mavenProject.toString());
+//                }
+//            }
+//        });
 
         HideableDecorator resGrpDecorator = new HideableDecorator(pnlResourceGroupHolder,
                 RESOURCE_GROUP, true /*adjustWindow*/);
@@ -319,11 +295,11 @@ public class WebAppSettingPanel extends AzureSettingPanel<WebAppConfiguration> i
         return pnlRoot;
     }
 
-    @Override
-    @NotNull
-    protected JComboBox<Artifact> getCbArtifact() {
-        return cbArtifact;
-    }
+//    @Override
+//    @NotNull
+//    protected JComboBox<Artifact> getCbArtifact() {
+//        return cbArtifact;
+//    }
 
     @Override
     @NotNull
@@ -331,11 +307,11 @@ public class WebAppSettingPanel extends AzureSettingPanel<WebAppConfiguration> i
         return lblArtifact;
     }
 
-    @Override
-    @NotNull
-    protected JComboBox<MavenProject> getCbMavenProject() {
-        return cbMavenProject;
-    }
+//    @Override
+//    @NotNull
+//    protected JComboBox<MavenProject> getCbMavenProject() {
+//        return cbMavenProject;
+//    }
 
     @Override
     @NotNull
@@ -404,12 +380,12 @@ public class WebAppSettingPanel extends AzureSettingPanel<WebAppConfiguration> i
         webAppConfiguration.setTargetPath(getTargetPath());
         webAppConfiguration.setTargetName(getTargetName());
 
-        String fileType = MavenRunTaskUtil.getFileType(webAppConfiguration.getTargetName());
-        if (Comparing.equal(fileType, MavenConstants.TYPE_WAR)) {
-            toggleWebContainerSetting(true /*isWar*/);
-        } else {
-            toggleWebContainerSetting(false /*isWar*/);
-        }
+//        String fileType = MavenRunTaskUtil.getFileType(webAppConfiguration.getTargetName());
+//        if (Comparing.equal(fileType, MavenConstants.TYPE_WAR)) {
+//            toggleWebContainerSetting(true /*isWar*/);
+//        } else {
+//            toggleWebContainerSetting(false /*isWar*/);
+//        }
 
         if (rdoUseExist.isSelected()) {
             webAppConfiguration.setWebAppId(selectedWebApp == null ? "" : selectedWebApp.getResource().id());

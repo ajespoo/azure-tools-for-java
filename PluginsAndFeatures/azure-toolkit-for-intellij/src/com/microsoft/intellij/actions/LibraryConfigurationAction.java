@@ -29,7 +29,6 @@ import com.intellij.openapi.roots.ModuleRootManager;
 import com.microsoft.azuretools.ijidea.utility.AzureAnAction;
 import com.microsoft.intellij.ui.libraries.AzureLibrary;
 import com.microsoft.intellij.ui.libraries.LibrariesConfigurationDialog;
-import com.microsoft.intellij.util.MavenRunTaskUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +48,8 @@ public class LibraryConfigurationAction extends AzureAnAction {
     }
 
     public void update(AnActionEvent event) {
-        final Module module = event.getData(LangDataKeys.MODULE);
-        boolean isMavenOrNull = (module == null || MavenRunTaskUtil.isMavenProject(module.getProject()));
-        event.getPresentation().setEnabledAndVisible(!isMavenOrNull && ModuleTypeId.JAVA_MODULE.equals(module.getOptionValue(Module.ELEMENT_TYPE)));
+        //final Module module = event.getData(LangDataKeys.MODULE);
+        //boolean isMavenOrNull = (module == null || MavenRunTaskUtil.isMavenProject(module.getProject()));
+        //event.getPresentation().setEnabledAndVisible(!isMavenOrNull && ModuleTypeId.JAVA_MODULE.equals(module.getOptionValue(Module.ELEMENT_TYPE)));
     }
 }

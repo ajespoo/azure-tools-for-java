@@ -22,29 +22,20 @@
 
 package com.microsoft.intellij.runner.container.pushimage.ui;
 
-import com.microsoft.intellij.runner.AzureSettingPanel;
-import icons.MavenIcons;
-
 import com.intellij.openapi.project.Project;
-import com.intellij.packaging.artifacts.Artifact;
-import com.intellij.ui.ListCellRendererWrapper;
 import com.microsoft.azuretools.azurecommons.util.Utils;
 import com.microsoft.azuretools.core.mvp.model.webapp.PrivateRegistryImageSetting;
+import com.microsoft.intellij.runner.AzureSettingPanel;
 import com.microsoft.intellij.runner.container.common.ContainerSettingPanel;
 import com.microsoft.intellij.runner.container.pushimage.PushImageRunConfiguration;
 import com.microsoft.intellij.runner.container.utils.DockerUtil;
-
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.idea.maven.project.MavenProject;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class SettingPanel extends AzureSettingPanel<PushImageRunConfiguration> {
     private JPanel rootPanel;
-    private JComboBox<Artifact> cbArtifact;
+   // private JComboBox<Artifact> cbArtifact;
     private JLabel lblArtifact;
     private JPanel pnlArtifact;
     private ContainerSettingPanel containerSettingPanel;
@@ -60,38 +51,38 @@ public class SettingPanel extends AzureSettingPanel<PushImageRunConfiguration> {
         super(project);
         $$$setupUI$$$(); // tell IntelliJ to call createUIComponents() here.
 
-        cbArtifact.addActionListener(e -> {
-            artifactActionPeformed((Artifact)cbArtifact.getSelectedItem());
-        });
-
-        cbArtifact.setRenderer(new ListCellRendererWrapper<Artifact>() {
-            @Override
-            public void customize(JList jlist, Artifact artifact, int i, boolean b, boolean b1) {
-                if (artifact != null) {
-                    setIcon(artifact.getArtifactType().getIcon());
-                    setText(artifact.getName());
-                }
-            }
-        });
-
-        cbMavenProject.addActionListener(e -> {
-            MavenProject selectedMavenProject = (MavenProject) cbMavenProject.getSelectedItem();
-            if (selectedMavenProject != null) {
-                containerSettingPanel.setDockerPath(
-                        DockerUtil.getDefaultDockerFilePathIfExist(selectedMavenProject.getDirectory())
-                );
-            }
-        });
-
-        cbMavenProject.setRenderer(new ListCellRendererWrapper<MavenProject>() {
-            @Override
-            public void customize(JList jList, MavenProject mavenProject, int i, boolean b, boolean b1) {
-                if (mavenProject != null) {
-                    setIcon(MavenIcons.MavenProject);
-                    setText(mavenProject.toString());
-                }
-            }
-        });
+//        cbArtifact.addActionListener(e -> {
+//            artifactActionPeformed((Artifact)cbArtifact.getSelectedItem());
+//        });
+//
+//        cbArtifact.setRenderer(new ListCellRendererWrapper<Artifact>() {
+//            @Override
+//            public void customize(JList jlist, Artifact artifact, int i, boolean b, boolean b1) {
+//                if (artifact != null) {
+//                    setIcon(artifact.getArtifactType().getIcon());
+//                    setText(artifact.getName());
+//                }
+//            }
+//        });
+//
+//        cbMavenProject.addActionListener(e -> {
+//            MavenProject selectedMavenProject = (MavenProject) cbMavenProject.getSelectedItem();
+//            if (selectedMavenProject != null) {
+//                containerSettingPanel.setDockerPath(
+//                        DockerUtil.getDefaultDockerFilePathIfExist(selectedMavenProject.getDirectory())
+//                );
+//            }
+//        });
+//
+//        cbMavenProject.setRenderer(new ListCellRendererWrapper<MavenProject>() {
+//            @Override
+//            public void customize(JList jList, MavenProject mavenProject, int i, boolean b, boolean b1) {
+//                if (mavenProject != null) {
+//                    setIcon(MavenIcons.MavenProject);
+//                    setText(mavenProject.toString());
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -106,11 +97,11 @@ public class SettingPanel extends AzureSettingPanel<PushImageRunConfiguration> {
         return rootPanel;
     }
 
-    @Override
-    @NotNull
-    protected JComboBox<Artifact> getCbArtifact() {
-        return cbArtifact;
-    }
+//    @Override
+//    @NotNull
+//    protected JComboBox<Artifact> getCbArtifact() {
+//        return cbArtifact;
+//    }
 
     @Override
     @NotNull
@@ -118,11 +109,11 @@ public class SettingPanel extends AzureSettingPanel<PushImageRunConfiguration> {
         return lblArtifact;
     }
 
-    @Override
-    @NotNull
-    protected JComboBox<MavenProject> getCbMavenProject() {
-        return cbMavenProject;
-    }
+//    @Override
+//    @NotNull
+//    protected JComboBox<MavenProject> getCbMavenProject() {
+//        return cbMavenProject;
+//    }
 
     @Override
     @NotNull

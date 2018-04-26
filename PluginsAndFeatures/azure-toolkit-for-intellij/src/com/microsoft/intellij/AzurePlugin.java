@@ -56,6 +56,7 @@ import com.microsoft.intellij.util.PluginUtil;
 import org.apache.commons.io.FileUtils;
 import org.w3c.dom.Document;
 
+
 import javax.swing.event.EventListenerList;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -117,12 +118,12 @@ public class AzurePlugin extends AbstractProjectComponent {
      * other plugins only in this method.
      */
     public void initComponent() {
-        if (!IS_ANDROID_STUDIO) {
+        //if (!IS_ANDROID_STUDIO) {
             LOG.info("Starting Azure Plugin");
             try {
                 //this code is for copying componentset.xml in plugins folder
                 copyPluginComponents();
-                initializeTelemetry();
+                //initializeTelemetry();
                 clearTempDirectory();
                 loadWebappsSettings();
             } catch (Exception e) {
@@ -130,7 +131,7 @@ public class AzurePlugin extends AbstractProjectComponent {
                So user should not get any exception prompt.*/
                 LOG.error(AzureBundle.message("expErlStrtUp"), e);
             }
-        }
+        //}
     }
 
     private void initializeTelemetry() throws Exception {
@@ -155,9 +156,9 @@ public class AzurePlugin extends AbstractProjectComponent {
                         setValues(dataFile);
                     } else if (instID == null || instID.isEmpty() || !GetHashMac.IsValidHashMacFormat(instID)) {
                         upgrade = true;
-                        Document doc = ParserXMLUtility.parseXMLFile(dataFile);
-                        DataOperations.updatePropertyValue(doc, message("instID"), _hashmac);
-                        ParserXMLUtility.saveXMLFile(dataFile, doc);
+//                        Document doc = ParserXMLUtility.parseXMLFile(dataFile);
+//                        DataOperations.updatePropertyValue(doc, message("instID"), _hashmac);
+//                        ParserXMLUtility.saveXMLFile(dataFile, doc);
                     }
                 } else {
                     upgrade = true;

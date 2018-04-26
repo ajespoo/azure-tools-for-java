@@ -31,7 +31,6 @@ import com.microsoft.intellij.runner.RunProcessHandler;
 import com.microsoft.intellij.runner.container.utils.Constant;
 import com.microsoft.intellij.runner.container.utils.DockerProgressHandler;
 import com.microsoft.intellij.runner.container.utils.DockerUtil;
-import com.microsoft.intellij.util.MavenRunTaskUtil;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 
@@ -120,7 +119,7 @@ public class PushImageRunState extends AzureRunProfileState<String> {
     protected void updateTelemetryMap(@NotNull Map<String, String> telemetryMap) {
         String fileName = dataModel.getTargetName();
         if (null != fileName) {
-            telemetryMap.put("FileType", MavenRunTaskUtil.getFileType(fileName));
+            //telemetryMap.put("FileType", MavenRunTaskUtil.getFileType(fileName));
         } else {
             telemetryMap.put("FileType", "");
         }

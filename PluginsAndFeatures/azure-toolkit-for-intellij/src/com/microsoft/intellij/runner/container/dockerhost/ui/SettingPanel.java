@@ -22,9 +22,6 @@
 
 package com.microsoft.intellij.runner.container.dockerhost.ui;
 
-import com.microsoft.intellij.runner.AzureSettingPanel;
-import icons.MavenIcons;
-
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
@@ -32,29 +29,20 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.packaging.artifacts.Artifact;
-import com.intellij.ui.ListCellRendererWrapper;
 import com.microsoft.azuretools.azurecommons.util.Utils;
+import com.microsoft.intellij.runner.AzureSettingPanel;
 import com.microsoft.intellij.runner.container.dockerhost.DockerHostRunConfiguration;
 import com.microsoft.intellij.runner.container.utils.DockerUtil;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
-
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.idea.maven.project.MavenProject;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 public class SettingPanel extends AzureSettingPanel<DockerHostRunConfiguration>{
     private static final String IMAGE_NAME_PREFIX = "localimage";
@@ -67,7 +55,7 @@ public class SettingPanel extends AzureSettingPanel<DockerHostRunConfiguration>{
     private JTextField textTagName;
     private JPanel pnlArtifact;
     private JLabel lblArtifact;
-    private JComboBox<Artifact> cbArtifact;
+    //private JComboBox<Artifact> cbArtifact;
     private JPanel rootPanel;
     private JPanel pnlDockerCertPath;
     private TextFieldWithBrowseButton dockerFilePathTextField;
@@ -103,38 +91,38 @@ public class SettingPanel extends AzureSettingPanel<DockerHostRunConfiguration>{
             }
         });
 
-        cbArtifact.addActionListener(e -> {
-            artifactActionPeformed((Artifact) cbArtifact.getSelectedItem());
-        });
-
-        cbArtifact.setRenderer(new ListCellRendererWrapper<Artifact>() {
-            @Override
-            public void customize(JList jlist, Artifact artifact, int i, boolean b, boolean b1) {
-                if (artifact != null) {
-                    setIcon(artifact.getArtifactType().getIcon());
-                    setText(artifact.getName());
-                }
-            }
-        });
-
-        cbMavenProject.addActionListener(e -> {
-            MavenProject selectedMavenProject = (MavenProject) cbMavenProject.getSelectedItem();
-            if (selectedMavenProject != null) {
-                dockerFilePathTextField.setText(
-                        DockerUtil.getDefaultDockerFilePathIfExist(selectedMavenProject.getDirectory())
-                );
-            }
-        });
-
-        cbMavenProject.setRenderer(new ListCellRendererWrapper<MavenProject>() {
-            @Override
-            public void customize(JList jList, MavenProject mavenProject, int i, boolean b, boolean b1) {
-                if (mavenProject != null) {
-                    setIcon(MavenIcons.MavenProject);
-                    setText(mavenProject.toString());
-                }
-            }
-        });
+//        cbArtifact.addActionListener(e -> {
+//            artifactActionPeformed((Artifact) cbArtifact.getSelectedItem());
+//        });
+//
+//        cbArtifact.setRenderer(new ListCellRendererWrapper<Artifact>() {
+//            @Override
+//            public void customize(JList jlist, Artifact artifact, int i, boolean b, boolean b1) {
+//                if (artifact != null) {
+//                    setIcon(artifact.getArtifactType().getIcon());
+//                    setText(artifact.getName());
+//                }
+//            }
+//        });
+//
+//        cbMavenProject.addActionListener(e -> {
+//            MavenProject selectedMavenProject = (MavenProject) cbMavenProject.getSelectedItem();
+//            if (selectedMavenProject != null) {
+//                dockerFilePathTextField.setText(
+//                        DockerUtil.getDefaultDockerFilePathIfExist(selectedMavenProject.getDirectory())
+//                );
+//            }
+//        });
+//
+//        cbMavenProject.setRenderer(new ListCellRendererWrapper<MavenProject>() {
+//            @Override
+//            public void customize(JList jList, MavenProject mavenProject, int i, boolean b, boolean b1) {
+//                if (mavenProject != null) {
+//                    setIcon(MavenIcons.MavenProject);
+//                    setText(mavenProject.toString());
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -149,11 +137,11 @@ public class SettingPanel extends AzureSettingPanel<DockerHostRunConfiguration>{
         return rootPanel;
     }
 
-    @Override
-    @NotNull
-    protected JComboBox<Artifact> getCbArtifact() {
-        return cbArtifact;
-    }
+//    @Override
+//    @NotNull
+//    protected JComboBox<Artifact> getCbArtifact() {
+//        return cbArtifact;
+//    }
 
     @Override
     @NotNull
@@ -161,11 +149,11 @@ public class SettingPanel extends AzureSettingPanel<DockerHostRunConfiguration>{
         return lblArtifact;
     }
 
-    @Override
-    @NotNull
-    protected JComboBox<MavenProject> getCbMavenProject() {
-        return cbMavenProject;
-    }
+//    @Override
+//    @NotNull
+//    protected JComboBox<MavenProject> getCbMavenProject() {
+//        return cbMavenProject;
+//    }
 
     @Override
     @NotNull

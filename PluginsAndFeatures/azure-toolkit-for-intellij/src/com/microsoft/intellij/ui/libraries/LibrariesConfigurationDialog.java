@@ -28,10 +28,6 @@ import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.OrderEntry;
 import com.intellij.openapi.roots.impl.ModuleLibraryOrderEntryImpl;
-import com.intellij.openapi.roots.libraries.Library;
-import com.intellij.openapi.roots.libraries.ui.OrderRoot;
-import com.intellij.openapi.roots.ui.configuration.projectRoot.LibrariesContainer;
-import com.intellij.openapi.roots.ui.configuration.projectRoot.LibrariesContainerFactory;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.AnActionButtonRunnable;
@@ -39,15 +35,13 @@ import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.components.JBList;
 import com.microsoft.azuretools.telemetry.AppInsightsClient;
 import com.microsoft.intellij.AzurePlugin;
-import com.microsoft.intellij.ui.components.DefaultDialogWrapper;
 import com.microsoft.intellij.ui.components.AzureDialogWrapper;
-import com.microsoft.intellij.util.PluginHelper;
+import com.microsoft.intellij.ui.components.DefaultDialogWrapper;
 import com.microsoft.intellij.util.PluginUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,52 +111,52 @@ public class LibrariesConfigurationDialog extends AzureDialogWrapper {
 
         wizard.setTitle(message("addLibraryTitle"));
         wizard.show();
-        if (wizard.isOK()) {
-            AzureLibrary azureLibrary = model.getSelectedLibrary();
-            final LibrariesContainer.LibraryLevel level = LibrariesContainer.LibraryLevel.MODULE;
-
-            AccessToken token = WriteAction.start();
-            try {
-                final ModifiableRootModel modifiableModel = ModuleRootManager.getInstance(module).getModifiableModel();
-                for (OrderEntry orderEntry : modifiableModel.getOrderEntries()) {
-                    if (orderEntry instanceof ModuleLibraryOrderEntryImpl
-                            && azureLibrary.getName().equals(((ModuleLibraryOrderEntryImpl) orderEntry).getLibraryName())) {
-                        PluginUtil.displayErrorDialog(message("error"), message("libraryExistsError"));
-                        return;
-                    }
-                }
-
-                Library newLibrary = LibrariesContainerFactory.createContainer(modifiableModel).createLibrary(azureLibrary.getName(), level, new ArrayList<OrderRoot>());
-                if (model.isExported()) {
-                    for (OrderEntry orderEntry : modifiableModel.getOrderEntries()) {
-                        if (orderEntry instanceof ModuleLibraryOrderEntryImpl
-                                && azureLibrary.getName().equals(((ModuleLibraryOrderEntryImpl) orderEntry).getLibraryName())) {
-                            ((ModuleLibraryOrderEntryImpl) orderEntry).setExported(true);
-                            break;
-                        }
-                    }
-                }
-                Library.ModifiableModel newLibraryModel = newLibrary.getModifiableModel();
-                // if there is separate resources folder
-                if (azureLibrary.getLocation() != null) {
-                    File file = new File(String.format("%s%s%s", AzurePlugin.pluginFolder, File.separator, azureLibrary.getLocation()));
-                    AddLibraryUtility.addLibraryRoot(file, newLibraryModel);
-                }
-                // if some files already contained in plugin dependencies, take them from there - true for azure sdk library
-                if (azureLibrary.getFiles().length > 0) {
-                    AddLibraryUtility.addLibraryFiles(new File(PluginHelper.getAzureLibLocation()), newLibraryModel, azureLibrary.getFiles());
-                }
-                newLibraryModel.commit();
-                modifiableModel.commit();
-                ((DefaultListModel) librariesList.getModel()).addElement(azureLibrary);
-                tempList.add(azureLibrary);
-            } catch (Exception ex) {
-                PluginUtil.displayErrorDialogAndLog(message("error"), message("addLibraryError"), ex);
-            } finally {
-                token.finish();
-            }
-            LocalFileSystem.getInstance().findFileByPath(PluginUtil.getModulePath(module)).refresh(true, true);
-        }
+//        if (wizard.isOK()) {
+//            AzureLibrary azureLibrary = model.getSelectedLibrary();
+//            final LibrariesContainer.LibraryLevel level = LibrariesContainer.LibraryLevel.MODULE;
+//
+//            AccessToken token = WriteAction.start();
+//            try {
+//                final ModifiableRootModel modifiableModel = ModuleRootManager.getInstance(module).getModifiableModel();
+//                for (OrderEntry orderEntry : modifiableModel.getOrderEntries()) {
+//                    if (orderEntry instanceof ModuleLibraryOrderEntryImpl
+//                            && azureLibrary.getName().equals(((ModuleLibraryOrderEntryImpl) orderEntry).getLibraryName())) {
+//                        PluginUtil.displayErrorDialog(message("error"), message("libraryExistsError"));
+//                        return;
+//                    }
+//                }
+//
+//                Library newLibrary = LibrariesContainerFactory.createContainer(modifiableModel).createLibrary(azureLibrary.getName(), level, new ArrayList<OrderRoot>());
+//                if (model.isExported()) {
+//                    for (OrderEntry orderEntry : modifiableModel.getOrderEntries()) {
+//                        if (orderEntry instanceof ModuleLibraryOrderEntryImpl
+//                                && azureLibrary.getName().equals(((ModuleLibraryOrderEntryImpl) orderEntry).getLibraryName())) {
+//                            ((ModuleLibraryOrderEntryImpl) orderEntry).setExported(true);
+//                            break;
+//                        }
+//                    }
+//                }
+//                Library.ModifiableModel newLibraryModel = newLibrary.getModifiableModel();
+//                // if there is separate resources folder
+//                if (azureLibrary.getLocation() != null) {
+//                    File file = new File(String.format("%s%s%s", AzurePlugin.pluginFolder, File.separator, azureLibrary.getLocation()));
+//                    AddLibraryUtility.addLibraryRoot(file, newLibraryModel);
+//                }
+//                // if some files already contained in plugin dependencies, take them from there - true for azure sdk library
+//                if (azureLibrary.getFiles().length > 0) {
+//                    AddLibraryUtility.addLibraryFiles(new File(PluginHelper.getAzureLibLocation()), newLibraryModel, azureLibrary.getFiles());
+//                }
+//                newLibraryModel.commit();
+//                modifiableModel.commit();
+//                ((DefaultListModel) librariesList.getModel()).addElement(azureLibrary);
+//                tempList.add(azureLibrary);
+//            } catch (Exception ex) {
+//                PluginUtil.displayErrorDialogAndLog(message("error"), message("addLibraryError"), ex);
+//            } finally {
+//                token.finish();
+//            }
+//            LocalFileSystem.getInstance().findFileByPath(PluginUtil.getModulePath(module)).refresh(true, true);
+//        }
     }
 
     private void removeLibrary() {

@@ -23,23 +23,13 @@
 package com.microsoft.intellij.runner;
 
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
-import com.intellij.packaging.artifacts.Artifact;
-import com.intellij.packaging.impl.run.BuildArtifactsBeforeRunTaskProvider;
 import com.microsoft.azuretools.telemetry.AppInsightsClient;
-import com.microsoft.intellij.util.MavenRunTaskUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.idea.maven.project.MavenProject;
-import org.jetbrains.idea.maven.project.MavenProjectsManager;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.nio.file.Paths;
+import javax.swing.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public abstract class AzureSettingPanel <T extends AzureRunConfigurationBase> {
@@ -47,7 +37,7 @@ public abstract class AzureSettingPanel <T extends AzureRunConfigurationBase> {
     private boolean isCbArtifactInited;
     private boolean isArtifact;
     private boolean telemetrySent;
-    private Artifact lastSelectedArtifact;
+    //private Artifact lastSelectedArtifact;
 
 
     public AzureSettingPanel(@NotNull Project project) {
@@ -56,20 +46,20 @@ public abstract class AzureSettingPanel <T extends AzureRunConfigurationBase> {
     }
 
     public void reset(@NotNull T configuration) {
-        if (!isMavenProject()) {
-            List<Artifact> artifacts = MavenRunTaskUtil.collectProjectArtifact(project);
-            setupArtifactCombo(artifacts, configuration.getTargetPath());
-        } else {
-            List<MavenProject> mavenProjects = MavenProjectsManager.getInstance(project).getProjects();
-            setupMavenProjectCombo(mavenProjects, configuration.getTargetPath());
-        }
+//        if (!isMavenProject()) {
+//            List<Artifact> artifacts = MavenRunTaskUtil.collectProjectArtifact(project);
+//            setupArtifactCombo(artifacts, configuration.getTargetPath());
+//        } else {
+//            List<MavenProject> mavenProjects = MavenProjectsManager.getInstance(project).getProjects();
+//            setupMavenProjectCombo(mavenProjects, configuration.getTargetPath());
+//        }
 
         resetFromConfig(configuration);
         sendTelemetry(configuration.getSubscriptionId(), configuration.getTargetName());
     }
 
     protected boolean isMavenProject() {
-        return MavenRunTaskUtil.isMavenProject(project);
+        return false;
     }
 
     protected String getProjectBasePath() {
@@ -78,45 +68,45 @@ public abstract class AzureSettingPanel <T extends AzureRunConfigurationBase> {
 
     protected String getTargetPath() {
         String targetPath = "";
-        if (isArtifact && lastSelectedArtifact != null) {
-            targetPath = lastSelectedArtifact.getOutputFilePath();
-        } else {
-            MavenProject mavenProject = (MavenProject) (getCbMavenProject().getSelectedItem());
-            if (mavenProject != null) {
-                targetPath = MavenRunTaskUtil.getTargetPath(mavenProject);
-            }
-        }
+//        if (isArtifact && lastSelectedArtifact != null) {
+//            targetPath = lastSelectedArtifact.getOutputFilePath();
+//        } else {
+//            MavenProject mavenProject = (MavenProject) (getCbMavenProject().getSelectedItem());
+//            if (mavenProject != null) {
+//                targetPath = MavenRunTaskUtil.getTargetPath(mavenProject);
+//            }
+//        }
         return targetPath;
     }
 
     protected String getTargetName() {
         String targetName = "";
-        if (isArtifact && lastSelectedArtifact != null) {
-            String targetPath = lastSelectedArtifact.getOutputFilePath();
-            targetName = Paths.get(targetPath).getFileName().toString();
-        } else {
-            MavenProject mavenProject = (MavenProject) (getCbMavenProject().getSelectedItem());
-            if (mavenProject != null) {
-                targetName = MavenRunTaskUtil.getTargetName(mavenProject);
-            }
-        }
+//        if (isArtifact && lastSelectedArtifact != null) {
+//            String targetPath = lastSelectedArtifact.getOutputFilePath();
+//            targetName = Paths.get(targetPath).getFileName().toString();
+//        } else {
+//            MavenProject mavenProject = (MavenProject) (getCbMavenProject().getSelectedItem());
+//            if (mavenProject != null) {
+//                targetName = MavenRunTaskUtil.getTargetName(mavenProject);
+//            }
+//        }
         return targetName;
     }
 
-    protected void artifactActionPeformed(Artifact selectArtifact) {
-        JPanel pnlRoot = getMainPanel();
-        if (!Comparing.equal(lastSelectedArtifact, selectArtifact)) {
-            if (lastSelectedArtifact != null && isCbArtifactInited) {
-                BuildArtifactsBeforeRunTaskProvider
-                        .setBuildArtifactBeforeRunOption(pnlRoot, project, lastSelectedArtifact, false);
-            }
-            if (selectArtifact != null && isCbArtifactInited) {
-                BuildArtifactsBeforeRunTaskProvider
-                        .setBuildArtifactBeforeRunOption(pnlRoot, project, selectArtifact, true);
-            }
-            lastSelectedArtifact = selectArtifact;
-        }
-    }
+//    protected void artifactActionPeformed(Artifact selectArtifact) {
+//        JPanel pnlRoot = getMainPanel();
+//        if (!Comparing.equal(lastSelectedArtifact, selectArtifact)) {
+//            if (lastSelectedArtifact != null && isCbArtifactInited) {
+//                BuildArtifactsBeforeRunTaskProvider
+//                        .setBuildArtifactBeforeRunOption(pnlRoot, project, lastSelectedArtifact, false);
+//            }
+//            if (selectArtifact != null && isCbArtifactInited) {
+//                BuildArtifactsBeforeRunTaskProvider
+//                        .setBuildArtifactBeforeRunOption(pnlRoot, project, selectArtifact, true);
+//            }
+//            lastSelectedArtifact = selectArtifact;
+//        }
+//    }
 
     @NotNull
     public abstract String getPanelName();
@@ -126,47 +116,47 @@ public abstract class AzureSettingPanel <T extends AzureRunConfigurationBase> {
     protected abstract void apply(@NotNull T configuration);
     @NotNull
     public abstract JPanel getMainPanel();
-    @NotNull
-    protected abstract JComboBox<Artifact> getCbArtifact();
+//    @NotNull
+//    protected abstract JComboBox<Artifact> getCbArtifact();
     @NotNull
     protected abstract JLabel getLblArtifact();
-    @NotNull
-    protected abstract JComboBox<MavenProject> getCbMavenProject();
+//    @NotNull
+//    protected abstract JComboBox<MavenProject> getCbMavenProject();
     @NotNull
     protected abstract JLabel getLblMavenProject();
 
-    private void setupArtifactCombo(List<Artifact> artifacts, String targetPath) {
-        isCbArtifactInited = false;
-        JComboBox<Artifact> cbArtifact = getCbArtifact();
-        cbArtifact.removeAllItems();
-        if (null != artifacts) {
-            for (Artifact artifact : artifacts) {
-                cbArtifact.addItem(artifact);
-                if (Comparing.equal(artifact.getOutputFilePath(), targetPath)) {
-                    cbArtifact.setSelectedItem(artifact);
-                }
-            }
-        }
-        cbArtifact.setVisible(true);
-        getLblArtifact().setVisible(true);
-        isArtifact = true;
-        isCbArtifactInited = true;
-    }
+//    private void setupArtifactCombo(List<Artifact> artifacts, String targetPath) {
+//        isCbArtifactInited = false;
+//        JComboBox<Artifact> cbArtifact = getCbArtifact();
+//        cbArtifact.removeAllItems();
+//        if (null != artifacts) {
+//            for (Artifact artifact : artifacts) {
+//                cbArtifact.addItem(artifact);
+//                if (Comparing.equal(artifact.getOutputFilePath(), targetPath)) {
+//                    cbArtifact.setSelectedItem(artifact);
+//                }
+//            }
+//        }
+//        cbArtifact.setVisible(true);
+//        getLblArtifact().setVisible(true);
+//        isArtifact = true;
+//        isCbArtifactInited = true;
+//    }
 
-    private void setupMavenProjectCombo(List<MavenProject> mvnprjs, String targetPath) {
-        JComboBox<MavenProject> cbMavenProject = getCbMavenProject();
-        cbMavenProject.removeAllItems();
-        if (null != mvnprjs) {
-            for (MavenProject prj : mvnprjs) {
-                cbMavenProject.addItem(prj);
-                if (MavenRunTaskUtil.getTargetPath(prj).equals(targetPath)) {
-                    cbMavenProject.setSelectedItem(prj);
-                }
-            }
-        }
-        cbMavenProject.setVisible(true);
-        getLblMavenProject().setVisible(true);
-    }
+//    private void setupMavenProjectCombo(List<MavenProject> mvnprjs, String targetPath) {
+//        JComboBox<MavenProject> cbMavenProject = getCbMavenProject();
+//        cbMavenProject.removeAllItems();
+//        if (null != mvnprjs) {
+//            for (MavenProject prj : mvnprjs) {
+//                cbMavenProject.addItem(prj);
+//                if (MavenRunTaskUtil.getTargetPath(prj).equals(targetPath)) {
+//                    cbMavenProject.setSelectedItem(prj);
+//                }
+//            }
+//        }
+//        cbMavenProject.setVisible(true);
+//        getLblMavenProject().setVisible(true);
+//    }
 
     private void sendTelemetry(String subId, String targetName) {
         if (telemetrySent) {
@@ -175,9 +165,9 @@ public abstract class AzureSettingPanel <T extends AzureRunConfigurationBase> {
         Observable.fromCallable(() -> {
             Map<String, String> map = new HashMap<>();
             map.put("SubscriptionId", subId !=null ? subId : "");
-            if (targetName != null) {
-                map.put("FileType", MavenRunTaskUtil.getFileType(targetName));
-            }
+//            if (targetName != null) {
+//                map.put("FileType", MavenRunTaskUtil.getFileType(targetName));
+//            }
             AppInsightsClient.createByType(AppInsightsClient.EventType.Dialog,
                     getPanelName(),
                     "Open" /*action*/,

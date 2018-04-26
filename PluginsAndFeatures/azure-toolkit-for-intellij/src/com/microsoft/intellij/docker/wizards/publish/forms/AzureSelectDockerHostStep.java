@@ -31,8 +31,6 @@ import com.intellij.openapi.ui.ValidationInfo;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.packaging.artifacts.Artifact;
-import com.intellij.packaging.impl.artifacts.ArtifactUtil;
 import com.intellij.ui.*;
 import com.intellij.ui.table.JBTable;
 import com.intellij.ui.wizard.WizardNavigationState;
@@ -207,13 +205,13 @@ public class AzureSelectDockerHostStep extends AzureSelectDockerWizardStep imple
         setDialogButtonsState(doValidate(false) == null);
       }
     });
-    for (Artifact item : ArtifactUtil.getArtifactWithOutputPaths(model.getProject())) {
-      String path = item.getOutputFilePath();
-      if (path != null && (path.toLowerCase().endsWith(".war") || path.toLowerCase().endsWith(".jar")) &&
-          AzureDockerValidationUtils.validateDockerArtifactPath(path)) {
-        dockerArtifactComboboxWithBrowse.getComboBox().addItem(path);
-      }
-    }
+//    for (Artifact item : ArtifactUtil.getArtifactWithOutputPaths(model.getProject())) {
+//      String path = item.getOutputFilePath();
+//      if (path != null && (path.toLowerCase().endsWith(".war") || path.toLowerCase().endsWith(".jar")) &&
+//          AzureDockerValidationUtils.validateDockerArtifactPath(path)) {
+//        dockerArtifactComboboxWithBrowse.getComboBox().addItem(path);
+//      }
+//    }
     if (dockerArtifactComboboxWithBrowse.getComboBox().getItemCount() > 0) {
       dockerArtifactComboboxWithBrowse.getComboBox().setSelectedIndex(0);
       String artifactFileName = new File((String) dockerArtifactComboboxWithBrowse.getComboBox().getItemAt(0)).getName();

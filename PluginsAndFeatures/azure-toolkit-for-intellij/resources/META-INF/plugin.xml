@@ -129,7 +129,7 @@
                   serviceImplementation="com.microsoft.intellij.AzureSettings"/>
     <applicationService serviceInterface="com.microsoft.intellij.ApplicationSettings"
                       serviceImplementation="com.microsoft.intellij.ApplicationSettings"/>
-    <fileEditorProvider implementation="com.microsoft.azure.hdinsight.jobs.framework.JobViewEditorProvider" />
+    <!--<fileEditorProvider implementation="com.microsoft.azure.hdinsight.jobs.framework.JobViewEditorProvider" />-->
 
     <fileEditorProvider implementation="com.microsoft.intellij.helpers.storage.BlobExplorerFileEditorProvider"/>
     <fileEditorProvider implementation="com.microsoft.intellij.helpers.storage.QueueExplorerFileEditorProvider"/>
@@ -145,35 +145,35 @@
           canCloseContents="false"
           icon="/icons/AzureExplorer_16.png"/>
 
-    <moduleBuilder builderClass="com.microsoft.azure.hdinsight.projects.HDInsightModuleBuilder"/>
-    <toolWindow
-        anchor="bottom"
-        factoryClass="com.microsoft.azure.hdinsight.spark.ui.SparkSubmissionToolWindowFactory"
-        id="HDInsight Spark Submission"
-        canCloseContents="false"
-        icon="/icons/SparkSubmissionToolWindow.png"/>
+    <!--<moduleBuilder builderClass="com.microsoft.azure.hdinsight.projects.HDInsightModuleBuilder"/>-->
+    <!--<toolWindow-->
+        <!--anchor="bottom"-->
+        <!--factoryClass="com.microsoft.azure.hdinsight.spark.ui.SparkSubmissionToolWindowFactory"-->
+        <!--id="HDInsight Spark Submission"-->
+        <!--canCloseContents="false"-->
+        <!--icon="/icons/SparkSubmissionToolWindow.png"/>-->
 
-    <executor implementation="com.microsoft.azure.hdinsight.spark.run.SparkBatchJobRunExecutor" id="SparkJobRun" />
-    <executor implementation="com.microsoft.azure.hdinsight.spark.run.SparkBatchJobDebugExecutor" id="SparkJobDebug" />
+    <!--<executor implementation="com.microsoft.azure.hdinsight.spark.run.SparkBatchJobRunExecutor" id="SparkJobRun" />-->
+    <!--<executor implementation="com.microsoft.azure.hdinsight.spark.run.SparkBatchJobDebugExecutor" id="SparkJobDebug" />-->
     <configurationType implementation="com.microsoft.intellij.runner.webapp.WebAppConfigurationType"/>
-    <configurationType implementation="com.microsoft.azure.hdinsight.spark.run.configuration.RemoteDebugRunConfigurationType"/>
-    <runConfigurationProducer implementation="com.microsoft.azure.hdinsight.spark.run.SparkBatchJobLocalRunConfigurationProducer"/>
+    <!--<configurationType implementation="com.microsoft.azure.hdinsight.spark.run.configuration.RemoteDebugRunConfigurationType"/>-->
+    <!--<runConfigurationProducer implementation="com.microsoft.azure.hdinsight.spark.run.SparkBatchJobLocalRunConfigurationProducer"/>-->
     <programRunner implementation="com.microsoft.intellij.runner.webapp.webappconfig.WebAppRunner"/>
-    <programRunner implementation="com.microsoft.azure.hdinsight.spark.run.SparkBatchJobRunner" />
-    <programRunner implementation="com.microsoft.azure.hdinsight.spark.run.SparkBatchJobDebuggerRunner" />
+    <!--<programRunner implementation="com.microsoft.azure.hdinsight.spark.run.SparkBatchJobRunner" />-->
+    <!--<programRunner implementation="com.microsoft.azure.hdinsight.spark.run.SparkBatchJobDebuggerRunner" />-->
     <configurationType implementation="com.microsoft.intellij.runner.container.AzureDockerSupportConfigurationType"/>
   </extensions>
 
   <application-components>
-    <component>
-      <implementation-class>com.microsoft.azure.hdinsight.jobs.JobViewApplicationComponent</implementation-class>
-    </component>
+    <!--<component>-->
+      <!--<implementation-class>com.microsoft.azure.hdinsight.jobs.JobViewApplicationComponent</implementation-class>-->
+    <!--</component>-->
     <component>
       <implementation-class>com.microsoft.intellij.AzureActionsComponent</implementation-class>
     </component>
-    <component>
-      <implementation-class>com.microsoft.azure.hdinsight.projects.HDInsightActionsComponent</implementation-class>
-    </component>
+    <!--<component>-->
+      <!--<implementation-class>com.microsoft.azure.hdinsight.projects.HDInsightActionsComponent</implementation-class>-->
+    <!--</component>-->
   </application-components>
 
   <project-components>
@@ -203,9 +203,9 @@
             icon="/icons/CodeSamples_16.png">
     </action>
 
-    <action id="Actions.SubmitSparkApplicationAction"
-            class="com.microsoft.azure.hdinsight.spark.actions.SubmitAction" text="Submit Spark Application to HDInsight"
-            description="Submit Spark Application to HDInsight" icon="/icons/Spark.png"/>
+    <!--<action id="Actions.SubmitSparkApplicationAction"-->
+            <!--class="com.microsoft.azure.hdinsight.spark.actions.SubmitAction" text="Submit Spark Application to HDInsight"-->
+            <!--description="Submit Spark Application to HDInsight" icon="/icons/Spark.png"/>-->
 
     <action id="AzureToolkit.AzureSignIn" class="com.microsoft.azuretools.ijidea.actions.AzureSignInAction" text="Azure Sign In..." />
     <action id="AzureToolkit.SelectSubscriptions" class="com.microsoft.azuretools.ijidea.actions.SelectSubscriptionsAction" text="Select Subscriptions..."
@@ -230,10 +230,10 @@
             text="Run on Web App for Containers" description="Run on Web App for Containers"
             icon="/icons/PublishWebAppOnLinux_16.png">
     </action>
-    <action id="Actions.SparkJobDisconnect" class="com.microsoft.azure.hdinsight.spark.run.action.SparkBatchJobDisconnectAction"
-            text="Disconnect" description="Disconnect the log view from remote Spark Job"
-            icon="/icons/SparkJobDisconnect.png">
-    </action>
+    <!--<action id="Actions.SparkJobDisconnect" class="com.microsoft.azure.hdinsight.spark.run.action.SparkBatchJobDisconnectAction"-->
+            <!--text="Disconnect" description="Disconnect the log view from remote Spark Job"-->
+            <!--icon="/icons/SparkJobDisconnect.png">-->
+    <!--</action>-->
 
     <group id="AzurePopupGroup" text="Azure" description="Azure" icon="/icons/azure.png" popup="true"
            class="com.microsoft.intellij.actions.AzurePopupGroup">

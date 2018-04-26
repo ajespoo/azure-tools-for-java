@@ -24,7 +24,6 @@ package com.microsoft.intellij.runner.webapp.webappconfig;
 
 import com.intellij.execution.process.ProcessOutputTypes;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Comparing;
 import com.microsoft.azure.management.appservice.PublishingProfile;
 import com.microsoft.azure.management.appservice.WebApp;
 import com.microsoft.azuretools.core.mvp.model.webapp.AzureWebAppMvpModel;
@@ -34,20 +33,12 @@ import com.microsoft.azuretools.utils.AzureUIRefreshEvent;
 import com.microsoft.azuretools.utils.WebAppUtils;
 import com.microsoft.intellij.runner.AzureRunProfileState;
 import com.microsoft.intellij.runner.RunProcessHandler;
-
-import com.microsoft.intellij.util.MavenRunTaskUtil;
 import org.apache.commons.net.ftp.FTPClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Map;
-
-import org.jetbrains.idea.maven.model.MavenConstants;
 
 public class WebAppRunState extends AzureRunProfileState<WebApp> {
 
@@ -159,7 +150,7 @@ public class WebAppRunState extends AzureRunProfileState<WebApp> {
         telemetryMap.put("CreateNewApp", String.valueOf(webAppSettingModel.isCreatingNew()));
         telemetryMap.put("CreateNewSP", String.valueOf(webAppSettingModel.isCreatingAppServicePlan()));
         telemetryMap.put("CreateNewRGP", String.valueOf(webAppSettingModel.isCreatingResGrp()));
-        telemetryMap.put("FileType", MavenRunTaskUtil.getFileType(webAppSettingModel.getTargetName()));
+        //telemetryMap.put("FileType", MavenRunTaskUtil.getFileType(webAppSettingModel.getTargetName()));
     }
 
     @NotNull
@@ -186,7 +177,7 @@ public class WebAppRunState extends AzureRunProfileState<WebApp> {
 
     private int uploadWebConfigFile(@NotNull FTPClient ftp, @NotNull String fileType,
                                     @NotNull RunProcessHandler processHandler) throws IOException {
-        if (webAppSettingModel.isCreatingNew() && Comparing.equal(fileType, MavenConstants.TYPE_JAR)) {
+        if (webAppSettingModel.isCreatingNew() /*&& Comparing.equal(fileType, MavenConstants.TYPE_JAR)*/) {
             processHandler.setText(UPLOADING_WEB_CONFIG);
             try (InputStream webConfigInput = getClass()
                     .getResourceAsStream(WEB_CONFIG_PACKAGE_PATH)) {
@@ -201,21 +192,21 @@ public class WebAppRunState extends AzureRunProfileState<WebApp> {
                                @NotNull RunProcessHandler processHandler)
             throws IOException {
         switch (fileType) {
-            case MavenConstants.TYPE_WAR:
-                if (webAppSettingModel.isDeployToRoot()) {
-                    WebAppUtils.removeFtpDirectory(ftp, CONTAINER_ROOT_PATH, processHandler);
-                    processHandler.setText(String.format(UPLOADING_ARTIFACT, CONTAINER_ROOT_PATH + "." + fileType));
-                    return uploadFileToFtp(ftp, CONTAINER_ROOT_PATH + "." + fileType, input, processHandler);
-                } else {
-                    WebAppUtils.removeFtpDirectory(ftp, WEB_APP_BASE_PATH + fileName, processHandler);
-                    processHandler.setText(String.format(UPLOADING_ARTIFACT,
-                            WEB_APP_BASE_PATH + webAppSettingModel.getTargetName()));
-                    return uploadFileToFtp(ftp, WEB_APP_BASE_PATH + webAppSettingModel.getTargetName(),
-                            input, processHandler);
-                }
-            case MavenConstants.TYPE_JAR:
-                processHandler.setText(String.format(UPLOADING_ARTIFACT, ROOT_PATH + "." + fileType));
-                return uploadFileToFtp(ftp, ROOT_PATH + "." + fileType, input, processHandler);
+//            case MavenConstants.TYPE_WAR:
+//                if (webAppSettingModel.isDeployToRoot()) {
+//                    WebAppUtils.removeFtpDirectory(ftp, CONTAINER_ROOT_PATH, processHandler);
+//                    processHandler.setText(String.format(UPLOADING_ARTIFACT, CONTAINER_ROOT_PATH + "." + fileType));
+//                    return uploadFileToFtp(ftp, CONTAINER_ROOT_PATH + "." + fileType, input, processHandler);
+//                } else {
+//                    WebAppUtils.removeFtpDirectory(ftp, WEB_APP_BASE_PATH + fileName, processHandler);
+//                    processHandler.setText(String.format(UPLOADING_ARTIFACT,
+//                            WEB_APP_BASE_PATH + webAppSettingModel.getTargetName()));
+//                    return uploadFileToFtp(ftp, WEB_APP_BASE_PATH + webAppSettingModel.getTargetName(),
+//                            input, processHandler);
+//                }
+//            case MavenConstants.TYPE_JAR:
+//                processHandler.setText(String.format(UPLOADING_ARTIFACT, ROOT_PATH + "." + fileType));
+//                return uploadFileToFtp(ftp, ROOT_PATH + "." + fileType, input, processHandler);
             default:
                 return 0;
         }
@@ -248,10 +239,10 @@ public class WebAppRunState extends AzureRunProfileState<WebApp> {
     @NotNull
     private String getUrl(@NotNull WebApp webApp, @NotNull String fileName, @NotNull String fileType) {
         String url = "https://" + webApp.defaultHostName();
-        if (Comparing.equal(fileType, MavenConstants.TYPE_WAR)
-                && !webAppSettingModel.isDeployToRoot()) {
-            url += "/" + fileName;
-        }
+//        if (Comparing.equal(fileType, MavenConstants.TYPE_WAR)
+//                && !webAppSettingModel.isDeployToRoot()) {
+//            url += "/" + fileName;
+//        }
         return url;
     }
 

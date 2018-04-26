@@ -35,7 +35,6 @@ import com.microsoft.intellij.runner.RunProcessHandler;
 import com.microsoft.intellij.runner.container.utils.Constant;
 import com.microsoft.intellij.runner.container.utils.DockerProgressHandler;
 import com.microsoft.intellij.runner.container.utils.DockerUtil;
-import com.microsoft.intellij.util.MavenRunTaskUtil;
 import com.spotify.docker.client.DefaultDockerClient;
 import com.spotify.docker.client.DockerClient;
 
@@ -153,9 +152,9 @@ public class WebAppOnLinuxDeployState extends AzureRunProfileState<WebApp> {
         telemetryMap.put("CreateNewSP", String.valueOf(deployModel.isCreatingNewAppServicePlan()));
         telemetryMap.put("CreateNewRGP", String.valueOf(deployModel.isCreatingNewResourceGroup()));
         String fileType = "";
-        if (null != deployModel.getTargetName()) {
-            fileType = MavenRunTaskUtil.getFileType(deployModel.getTargetName());
-        }
+//        if (null != deployModel.getTargetName()) {
+//            fileType = MavenRunTaskUtil.getFileType(deployModel.getTargetName());
+//        }
         telemetryMap.put("FileType", fileType);
     }
 

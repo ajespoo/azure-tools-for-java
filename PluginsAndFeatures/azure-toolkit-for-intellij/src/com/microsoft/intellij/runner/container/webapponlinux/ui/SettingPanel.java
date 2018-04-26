@@ -22,15 +22,11 @@
 
 package com.microsoft.intellij.runner.container.webapponlinux.ui;
 
-import com.microsoft.intellij.runner.AzureSettingPanel;
-import icons.MavenIcons;
-
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.ActionToolbarPosition;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Comparing;
-import com.intellij.packaging.artifacts.Artifact;
 import com.intellij.ui.AnActionButton;
 import com.intellij.ui.HideableDecorator;
 import com.intellij.ui.ListCellRendererWrapper;
@@ -45,31 +41,22 @@ import com.microsoft.azure.management.resources.Subscription;
 import com.microsoft.azuretools.azurecommons.util.Utils;
 import com.microsoft.azuretools.core.mvp.model.ResourceEx;
 import com.microsoft.azuretools.core.mvp.model.webapp.PrivateRegistryImageSetting;
+import com.microsoft.intellij.runner.AzureSettingPanel;
 import com.microsoft.intellij.runner.container.common.ContainerSettingPanel;
 import com.microsoft.intellij.runner.container.utils.DockerUtil;
 import com.microsoft.intellij.runner.container.webapponlinux.WebAppOnLinuxDeployConfiguration;
-
 import com.microsoft.tooling.msservices.serviceexplorer.azure.container.WebAppOnLinuxDeployPresenter;
 import com.microsoft.tooling.msservices.serviceexplorer.azure.container.WebAppOnLinuxDeployView;
-
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.idea.maven.project.MavenProject;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ItemEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 public class SettingPanel extends AzureSettingPanel<WebAppOnLinuxDeployConfiguration> implements WebAppOnLinuxDeployView {
     private static final String NOT_APPLICABLE = "N/A";
@@ -118,7 +105,7 @@ public class SettingPanel extends AzureSettingPanel<WebAppOnLinuxDeployConfigura
     private String defaultSubscriptionId;
     private String defaultAppServicePlanId;
     private JTextField textSelectedAppName; // invisible, used to trigger validation on tableRowSelection
-    private JComboBox<Artifact> cbArtifact;
+    //private JComboBox<Artifact> cbArtifact;
     private JLabel lblArtifact;
     private JPanel pnlArtifact;
     private JPanel pnlResourceGroupHolder;
@@ -130,7 +117,7 @@ public class SettingPanel extends AzureSettingPanel<WebAppOnLinuxDeployConfigura
     private ContainerSettingPanel containerSettingPanel;
     private JPanel pnlMavenProject;
     private JLabel lblMavenProject;
-    private JComboBox<MavenProject> cbMavenProject;
+    //private JComboBox<MavenProject> cbMavenProject;
 
     /**
      * Constructor.
@@ -211,38 +198,38 @@ public class SettingPanel extends AzureSettingPanel<WebAppOnLinuxDeployConfigura
             }
         });
 
-        cbArtifact.addActionListener(e -> {
-            artifactActionPeformed((Artifact) cbArtifact.getSelectedItem());
-        });
-
-        cbArtifact.setRenderer(new ListCellRendererWrapper<Artifact>() {
-            @Override
-            public void customize(JList jlist, Artifact artifact, int i, boolean b, boolean b1) {
-                if (artifact != null) {
-                    setIcon(artifact.getArtifactType().getIcon());
-                    setText(artifact.getName());
-                }
-            }
-        });
-
-        cbMavenProject.addActionListener(e -> {
-            MavenProject selectedMavenProject = (MavenProject) cbMavenProject.getSelectedItem();
-            if (selectedMavenProject != null) {
-                containerSettingPanel.setDockerPath(
-                        DockerUtil.getDefaultDockerFilePathIfExist(selectedMavenProject.getDirectory())
-                );
-            }
-        });
-
-        cbMavenProject.setRenderer(new ListCellRendererWrapper<MavenProject>() {
-            @Override
-            public void customize(JList jList, MavenProject mavenProject, int i, boolean b, boolean b1) {
-                if (mavenProject != null) {
-                    setIcon(MavenIcons.MavenProject);
-                    setText(mavenProject.toString());
-                }
-            }
-        });
+//        cbArtifact.addActionListener(e -> {
+//            artifactActionPeformed((Artifact) cbArtifact.getSelectedItem());
+//        });
+//
+//        cbArtifact.setRenderer(new ListCellRendererWrapper<Artifact>() {
+//            @Override
+//            public void customize(JList jlist, Artifact artifact, int i, boolean b, boolean b1) {
+//                if (artifact != null) {
+//                    setIcon(artifact.getArtifactType().getIcon());
+//                    setText(artifact.getName());
+//                }
+//            }
+//        });
+//
+//        cbMavenProject.addActionListener(e -> {
+//            MavenProject selectedMavenProject = (MavenProject) cbMavenProject.getSelectedItem();
+//            if (selectedMavenProject != null) {
+//                containerSettingPanel.setDockerPath(
+//                        DockerUtil.getDefaultDockerFilePathIfExist(selectedMavenProject.getDirectory())
+//                );
+//            }
+//        });
+//
+//        cbMavenProject.setRenderer(new ListCellRendererWrapper<MavenProject>() {
+//            @Override
+//            public void customize(JList jList, MavenProject mavenProject, int i, boolean b, boolean b1) {
+//                if (mavenProject != null) {
+//                    setIcon(MavenIcons.MavenProject);
+//                    setText(mavenProject.toString());
+//                }
+//            }
+//        });
 
         // fold sub panel
         HideableDecorator resGrpDecorator = new HideableDecorator(pnlResourceGroupHolder,
@@ -281,11 +268,11 @@ public class SettingPanel extends AzureSettingPanel<WebAppOnLinuxDeployConfigura
         return rootPanel;
     }
 
-    @Override
-    @NotNull
-    protected JComboBox<Artifact> getCbArtifact() {
-        return cbArtifact;
-    }
+//    @Override
+//    @NotNull
+//    protected JComboBox<Artifact> getCbArtifact() {
+//        return cbArtifact;
+//    }
 
     @Override
     @NotNull
@@ -293,11 +280,11 @@ public class SettingPanel extends AzureSettingPanel<WebAppOnLinuxDeployConfigura
         return lblArtifact;
     }
 
-    @Override
-    @NotNull
-    protected JComboBox<MavenProject> getCbMavenProject() {
-        return cbMavenProject;
-    }
+//    @Override
+//    @NotNull
+//    protected JComboBox<MavenProject> getCbMavenProject() {
+//        return cbMavenProject;
+//    }
 
     @Override
     @NotNull

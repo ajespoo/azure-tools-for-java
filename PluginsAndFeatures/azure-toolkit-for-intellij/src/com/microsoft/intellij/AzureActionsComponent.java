@@ -28,8 +28,6 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.actionSystem.IdeActions;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.diagnostic.Logger;
-import com.microsoft.azure.hdinsight.common.HDInsightHelperImpl;
-import com.microsoft.azure.hdinsight.common.HDInsightLoader;
 import com.microsoft.azuretools.authmanage.AuthMethodManager;
 import com.microsoft.azuretools.authmanage.CommonSettings;
 import com.microsoft.azuretools.core.mvp.model.webapp.AzureWebAppMvpModel;
@@ -48,8 +46,8 @@ import com.microsoft.tooling.msservices.components.DefaultLoader;
 import com.microsoft.tooling.msservices.components.PluginComponent;
 import com.microsoft.tooling.msservices.components.PluginSettings;
 import com.microsoft.tooling.msservices.serviceexplorer.Node;
-
 import org.jetbrains.annotations.NotNull;
+import rx.internal.util.PlatformDependent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -60,8 +58,6 @@ import java.nio.file.Paths;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.SimpleFormatter;
-
-import rx.internal.util.PlatformDependent;
 
 public class AzureActionsComponent implements ApplicationComponent, PluginComponent {
     public static final String PLUGIN_ID = CommonConst.PLUGIN_ID;
@@ -78,7 +74,7 @@ public class AzureActionsComponent implements ApplicationComponent, PluginCompon
         SchedulerProviderFactory.getInstance().init(new AppSchedulerProvider());
         MvpUIHelperFactory.getInstance().init(new MvpUIHelperImpl());
 
-        HDInsightLoader.setHHDInsightHelper(new HDInsightHelperImpl());
+        //HDInsightLoader.setHHDInsightHelper(new HDInsightHelperImpl());
         try {
             loadPluginSettings();
         } catch (IOException e) {

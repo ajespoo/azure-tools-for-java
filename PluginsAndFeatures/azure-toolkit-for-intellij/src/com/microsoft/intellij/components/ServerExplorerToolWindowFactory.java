@@ -33,7 +33,6 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.openapi.wm.ex.ToolWindowEx;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.treeStructure.Tree;
-import com.microsoft.azure.hdinsight.common.HDInsightUtil;
 import com.microsoft.azuretools.authmanage.AuthMethodManager;
 import com.microsoft.azuretools.ijidea.actions.AzureSignInAction;
 import com.microsoft.azuretools.ijidea.actions.SelectSubscriptionsAction;
@@ -48,20 +47,11 @@ import com.microsoft.tooling.msservices.serviceexplorer.Node;
 import com.microsoft.tooling.msservices.serviceexplorer.NodeAction;
 import com.microsoft.tooling.msservices.serviceexplorer.RefreshableNode;
 import com.microsoft.tooling.msservices.serviceexplorer.azure.AzureModule;
-
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JTree;
-import javax.swing.SwingUtilities;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-
-import java.awt.Graphics2D;
+import javax.swing.*;
+import javax.swing.tree.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -80,7 +70,7 @@ public class ServerExplorerToolWindowFactory implements ToolWindowFactory, Prope
         // initialize azure service module
         AzureModule azureModule = new AzureModuleImpl(project);
 
-        HDInsightUtil.setHDInsightRootModule(azureModule);
+        //HDInsightUtil.setHDInsightRootModule(azureModule);
 
         // initialize with all the service modules
         DefaultTreeModel treeModel = new DefaultTreeModel(initRoot(project, azureModule));
